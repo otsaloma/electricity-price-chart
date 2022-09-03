@@ -1,6 +1,6 @@
 .env
 .envrc
 __pycache__
-price.npz
+prices.npz
 prices.json
 venv
