@@ -4,3 +4,4 @@ entsoe-py==0.5.8
 flake8==5.0.4
 numpy==1.23.2
 pandas==1.4.4
+requests==2.28.1
