@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Sähkön hinta">
+    <meta name="description" content="Suomen sähkön tunneittainen spot-hinta Nord Pool sähköpörssissä">
     <title>Sähkön hinta</title>
     <link rel="icon" href="favicon.svg?v=dev">
     <link rel="mask-icon" href="favicon-mask.svg?v=dev" color="#3b82f6">
@@ -11,7 +11,16 @@
     <link rel="stylesheet" href="style.css?v=dev">
   </head>
   <body>
-    <h1>Sähkön hinta</h1>
+    <main>
+      <h1>Sähkön hinta</h1>
+      <p>Suomen sähkön arvonlisäverollinen tunneittainen spot-hinta Nord Pool sähköpörssissä. Lähde:
+        <a href="https://transparency.entsoe.eu/content/static_content/Static%20content/web%20api/Guide.html">
+          ENTSO-E API</a></p>
+      <div id="chart"></div>
+    </main>
+    <footer>
+      <p>Toteutus: Osmo Salomaa, Soosi: <a href="https://github.com/otsaloma/electricity-price-chart">GitHub</a></p>
+    </footer>
     <script src="main.js?v=dev"></script>
   </body>
 </html>

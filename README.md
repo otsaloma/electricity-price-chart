@@ -2,11 +2,11 @@ Finnish Electricity Price Chart
 ===============================
 
 A visualization of Finnish electricity spot prices in two parts: (1) A
-lambda function that downloads data from the [ENTSOE API][] using
+lambda function that downloads data from the [ENTSO-E API][] using
 [entsoe-py][] to an S3 bucket and (2) a static client-side web app that
 renders that data into a custom visualization.
 
-[ENTSOE API]: https://transparency.entsoe.eu/content/static_content/Static%20content/web%20api/Guide.html
+[ENTSO-E API]: https://transparency.entsoe.eu/content/static_content/Static%20content/web%20api/Guide.html
 [entsoe-py]: https://github.com/EnergieID/entsoe-py
 
 ## Getting Started
