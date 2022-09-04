@@ -5,6 +5,7 @@ import dataiter as di
 import io
 import os
 import pandas as pd
+import requests
 import sys
 
 from entsoe import EntsoePandasClient
@@ -42,6 +43,10 @@ def download_local():
     data.write_json("prices.json")
     print(f"Wrote {data.nrow} prices to prices.npz.")
     print(f"Wrote {data.nrow} prices to prices.json.")
+
+def lambda_handler(event, context):
+    download_bucket()
+    requests.get("https://hc-ping.com/4b1d3355-16ac-41a5-8c45-7e322462ffb3", timeout=10)
 
 if __name__ == "__main__" and sys.argv[1:]:
     if sys.argv[1] == "bucket":

@@ -1,6 +1,9 @@
 .env
 .envrc
 __pycache__
+lambda
+lambda.zip
 prices.json
 prices.npz
+requirements-lambda.txt
 venv
