@@ -45,6 +45,11 @@ p {
   text-align: left;
 }
 
+#chart {
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  margin: 2rem 0;
+}
+
 footer p {
   margin-top: 2rem;
   opacity: 0.7;
