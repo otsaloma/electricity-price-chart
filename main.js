@@ -18,31 +18,31 @@ function renderChart(data) {
 
         // Bar
         let div = document.createElement("div");
-        div.style["background-image"] = `linear-gradient(to right, #93c5fd 0 ${width}%, transparent ${width}% 100%)`;
-        div.style["height"] = "42px";
+        div.style.backgroundImage = `linear-gradient(to right, #93c5fd 0 ${width}%, transparent ${width}% 100%)`;
+        div.style.height = "42px";
         chart.appendChild(div);
 
         // Time label
         div = document.createElement("div");
-        div.style["height"] = "0";
-        div.style["line-height"] = "42px";
-        div.style["padding"] = "0 9px";
-        div.style["position"] = "relative";
-        div.style["text-align"] = "left";
-        div.style["top"] = "-42px";
-        div.style["z"] = 1000;
+        div.style.height = "0";
+        div.style.lineHeight = "42px";
+        div.style.padding = "0 9px";
+        div.style.position = "relative";
+        div.style.textAlign = "left";
+        div.style.top = "-42px";
+        div.style.z = 1000;
         div.innerHTML = data[i].time;
         chart.appendChild(div);
 
         // Price label
         div = document.createElement("div");
-        div.style["height"] = "0";
-        div.style["line-height"] = "42px";
-        div.style["padding"] = "0 9px";
-        div.style["position"] = "relative";
-        div.style["text-align"] = "right";
-        div.style["top"] = "-42px";
-        div.style["z"] = 1000;
+        div.style.height = "0";
+        div.style.lineHeight = "42px";
+        div.style.padding = "0 9px";
+        div.style.position = "relative";
+        div.style.textAlign = "right";
+        div.style.top = "-42px";
+        div.style.z = 1000;
         div.innerHTML = `${data[i].price_with_vat.toFixed(0)}`;
         chart.appendChild(div);
 
