@@ -12,7 +12,7 @@ clean:
 # https://docs.aws.amazon.com/lambda/latest/dg/python-package.html
 # https://aws.amazon.com/premiumsupport/knowledge-center/lambda-python-package-compatible/
 deploy-lambda:
-	$(MAKE) clean
+	$(MAKE) check clean
 	cat requirements.txt \
 	| grep -v boto3 \
 	| grep -v flake8 \
