@@ -1,21 +1,35 @@
 // -*- coding: utf-8-unix -*-
 
-function appendBar(chart, width, time, price) {
+function appendBar(chart, width, time, price, title) {
     // Bar
     let div = document.createElement("div");
     div.classList.add("bar");
-    div.style.width = `${width}%`;
+    title && div.classList.add("title");
+    // Use a linear gradient to get a full width bar and top border between days.
+    div.style.backgroundImage = `linear-gradient(to right, var(--color-bar) 0 ${width}%, transparent ${width}% 100%)`;
     chart.appendChild(div);
     // Time label
     div = document.createElement("div");
     div.classList.add("label", "time");
+    title && div.classList.add("title");
     div.innerHTML = time;
     chart.appendChild(div);
     // Price label
     div = document.createElement("div");
     div.classList.add("label", "price");
+    title && div.classList.add("title");
     div.innerHTML = price;
     chart.appendChild(div);
+}
+
+function formatDate(string) {
+    const date = new Date(string);
+    const weekday = ["su", "ma", "ti", "ke", "to", "pe", "la"][date.getDay()];
+    return `${weekday} ${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()}`;
+}
+
+function formatPrice(number) {
+    return number.toFixed(0);
 }
 
 function renderChart(data) {
@@ -24,7 +38,10 @@ function renderChart(data) {
     for (const item of data) {
         // Append hourly bars to chart along with time and price labels.
         const width = Math.round(item.price_with_vat / priceMax * 100);
-        appendBar(chart, width, item.time, item.price_with_vat.toFixed(0));
+        const title = item.time === "00:00";
+        const time  = title ? `${formatDate(item.date)}` : item.time;
+        const price = title ? `${formatPrice(item.price_with_vat)} snt/kWh` : formatPrice(item.price_with_vat);
+        appendBar(chart, width, time, price, title);
     }
 }
 

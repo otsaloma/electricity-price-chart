@@ -53,8 +53,11 @@ p {
 }
 
 #chart .bar {
-  background-color: var(--color-bar);
   height: var(--height-bar);
+}
+
+#chart .bar.title:not(:first-child) {
+  border-top: 1px solid rgba(0, 0, 0, 0.5);
 }
 
 #chart .label {
@@ -68,6 +71,10 @@ p {
 
 #chart .label.time {
   text-align: left;
+}
+
+#chart .label.time.title {
+  font-weight: 700;
 }
 
 #chart .label.price {
