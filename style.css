@@ -2,11 +2,13 @@
 
 :root {
   --color-background: white;
+  --color-bar:  #93c5fd;
   --color-link: #3b82f6;
   --color-text: #374151;
   --font-family-monospace: ui-monospace, "SF Mono", "Segoe UI Mono", "Cascadia Code", "Cascadia Mono", "IBM Plex Mono", "Roboto Mono", monospace;
   --font-family-sans-serif: "Avenir Next", -apple-system, BlinkMacSystemFont, "Segoe UI", "IBM Plex Sans", "Inter UI", "Open Sans", "Noto Sans", "Roboto", sans-serif;
   --font-size-main: 16px;
+  --height-bar: 42px;
 }
 
 html {
@@ -19,7 +21,7 @@ body {
   color: var(--color-text);
   font-family: var(--font-family-sans-serif);
   font-size: var(--font-size-main);
-  line-height: 1.5rem;
+  line-height: 1.5em;
   margin: 0 auto;
   max-width: 36rem;
   padding: 1rem 1rem 5rem 1rem;
@@ -30,7 +32,7 @@ body {
 h1 {
   font-size: 4rem;
   font-weight: 900;
-  line-height: 6rem;
+  line-height: 5rem;
   margin: 1rem 0;
 }
 
@@ -48,6 +50,28 @@ p {
 #chart {
   border: 1px solid rgba(0, 0, 0, 0.5);
   margin: 2rem 0;
+}
+
+#chart .bar {
+  background-color: var(--color-bar);
+  height: var(--height-bar);
+}
+
+#chart .label {
+  height: 0;
+  line-height: var(--height-bar);
+  padding: 0 9px;
+  position: relative;
+  top: calc(var(--height-bar) * -1);
+  z: 1000;
+}
+
+#chart .label.time {
+  text-align: left;
+}
+
+#chart .label.price {
+  text-align: right;
 }
 
 footer p {
