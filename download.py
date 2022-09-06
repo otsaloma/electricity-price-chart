@@ -3,6 +3,7 @@
 import boto3
 import dataiter as di
 import io
+import numpy as np
 import os
 import pandas as pd
 import requests
@@ -21,6 +22,9 @@ def download():
     data.time = data.datetime.map(lambda x: x.time().isoformat("minutes"))
     data.price = ts.to_numpy() / 10 # EUR/MWh to snt/kWh
     data.price_with_vat = 1.24 * data.price
+    # Remove excess hour at the end of data.
+    if data.time[-1] == "00:00":
+        data = data.slice(np.arange(data.nrow - 1))
     return data
 
 def download_bucket():
