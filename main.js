@@ -1,26 +1,28 @@
 // -*- coding: utf-8-unix -*-
 
-function appendBar(chart, width, time, price, title, past) {
+function addClasses(div, title, pastDay, pastHour) {
+    title    && div.classList.add("title");
+    pastDay  && div.classList.add("past-day", "hidden");
+    pastHour && div.classList.add("past-hour");
+}
+
+function appendBar(chart, width, time, price, title, pastDay, pastHour) {
     // Bar
     let div = document.createElement("div");
     div.classList.add("bar");
-    title && div.classList.add("title");
-    past && div.classList.add("past");
-    // Use a linear gradient to get a full width bar and top border between days.
+    addClasses(div, title, pastDay, pastHour);
     div.style.backgroundImage = `linear-gradient(to right, var(--color-bar) 0 ${width}%, transparent ${width}% 100%)`;
     chart.appendChild(div);
     // Time label
     div = document.createElement("div");
     div.classList.add("label", "time");
-    title && div.classList.add("title");
-    past && div.classList.add("past");
+    addClasses(div, title, pastDay, pastHour);
     div.innerHTML = time;
     chart.appendChild(div);
     // Price label
     div = document.createElement("div");
     div.classList.add("label", "price");
-    title && div.classList.add("title");
-    past && div.classList.add("past");
+    addClasses(div, title, pastDay, pastHour);
     div.innerHTML = price;
     chart.appendChild(div);
 }
@@ -35,18 +37,32 @@ function formatPrice(number) {
     return number.toFixed(0);
 }
 
+function isPastDay(date, now) {
+    if (date.getFullYear() < now.getFullYear()) return true;
+    if (date.getMonth() < now.getMonth()) return true;
+    if (date.getDate() < now.getDate()) return true;
+    return false;
+}
+
+function isPastHour(date, now) {
+    // Add one hour to get the endpoint of the range.
+    return (date.getTime() + 3600*1000) < now.getTime();
+}
+
 function renderChart(data) {
-    const now = Date.now();
+    const now = new Date();
     const chart = document.getElementById("chart");
     const priceMax = 1.05 * Math.max(...data.map(x => x.price_with_vat));
     for (const item of data) {
         // Append hourly bars to chart along with time and price labels.
         const width = Math.round(item.price_with_vat / priceMax * 100);
-        const past  = (Date.parse(item.datetime.replace(" ", "T")) + 3600*1000) < now;
         const title = item.time === "00:00";
         const time  = title ? `${formatDate(item.date)}` : item.time;
         const price = title ? `${formatPrice(item.price_with_vat)} snt/kWh` : formatPrice(item.price_with_vat);
-        appendBar(chart, width, time, price, title, past);
+        const datetime = new Date(item.datetime.replace(" ", "T"));
+        const pastDay  = isPastDay(datetime, now);
+        const pastHour = isPastHour(datetime, now);
+        appendBar(chart, width, time, price, title, pastDay, pastHour);
     }
 }
 

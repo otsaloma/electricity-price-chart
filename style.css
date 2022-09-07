@@ -48,6 +48,10 @@ p {
   text-align: left;
 }
 
+.hidden {
+  display: none;
+}
+
 #chart {
   border: 1px solid rgba(0, 0, 0, 0.5);
   margin: 2rem 0;
@@ -57,11 +61,12 @@ p {
   height: var(--height-bar);
 }
 
-#chart .bar.title:not(:first-child) {
+/* Not the first title, not the first visible title */
+#chart .bar.title:not(:first-child):not(.hidden + .bar.title:not(.hidden)) {
   border-top: 1px solid rgba(0, 0, 0, 0.5);
 }
 
-#chart .bar.past {
+#chart .bar.past-hour {
   opacity: 0.5;
 }
 
@@ -71,7 +76,7 @@ p {
   padding: 0 9px;
   position: relative;
   top: calc(var(--height-bar) * -1);
-  z: 1000;
+  z-index: 1000;
 }
 
 #chart .label.time {
