@@ -1,6 +1,7 @@
 .env
 .envrc
 __pycache__
+html
 lambda
 lambda.zip
 prices.json
