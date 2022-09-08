@@ -1,6 +1,6 @@
 # -*- coding: utf-8-unix -*-
 
-VERSION = `date +%Y%m%d%H%M`
+VERSION = `date +%s`
 
 check:
 	flake8 *.py
