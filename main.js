@@ -13,8 +13,15 @@ function appendBar(chart, width, median, time, price, title, pastDay, pastHour) 
     addClasses(div, title, pastDay, pastHour);
     console.log(median);
     div.style.backgroundImage = [
-        `linear-gradient(to right, transparent 0 ${median}%, var(--color-ref) ${median}% calc(${median}% + 2px), transparent calc(${median}% + 2px) 100%)`,
-        `linear-gradient(to right, var(--color-bar) 0 ${width}%, transparent ${width}% 100%)`,
+        `linear-gradient(
+             to right,
+             transparent 0 calc(${median}% - 1px),
+             var(--color-ref) calc(${median}% - 1px) calc(${median}% + 1px),
+             transparent calc(${median}% + 1px) 100%)`,
+        `linear-gradient(
+             to right,
+             var(--color-bar) 0 ${width}%,
+             transparent ${width}% 100%)`,
     ].join(", ");
     chart.appendChild(div);
     // Time label
