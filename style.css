@@ -35,7 +35,7 @@ body {
   font-size: var(--font-size-main);
   line-height: 1.5em;
   margin: 0 auto;
-  max-width: 32rem;
+  max-width: 500px;
   padding: var(--padding-1) var(--padding-1) calc(var(--padding-1) * 2) var(--padding-1);
   text-align: center;
   text-rendering: optimizeLegibility;
