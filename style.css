@@ -64,12 +64,19 @@ p {
 }
 
 .tick {
-  margin: calc(var(--padding-1) / 2) 0;
+  height: 24px;
+  line-height: 24px;
+  margin: 0;
   text-align: left;
+}
+
+.tick.q67 {
+  margin-top: -24px;
 }
 
 #chart {
   border: 1px solid rgba(0, 0, 0, 0.5);
+  margin: calc(var(--padding-1) / 2) 0;
 }
 
 #chart .bar {
