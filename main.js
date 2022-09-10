@@ -110,7 +110,14 @@ function renderChart(data) {
 }
 
 (function() {
+
     fetch("prices.json")
         .then(response => response.json())
         .then(data => renderChart(data));
+
+    document.querySelector("#toggle-history-button")
+        .addEventListener("click", event =>
+            document.querySelectorAll(".past-day")
+                .forEach(x => x.classList.toggle("hidden")));
+
 })();

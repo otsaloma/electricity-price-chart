@@ -70,7 +70,7 @@ p {
   text-align: left;
 }
 
-.tick.q67 {
+.tick:not(.first) {
   margin-top: -24px;
 }
 
