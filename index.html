@@ -15,12 +15,16 @@
       <h1>Sähkön hinta</h1>
       <p>Suomen sähkön arvonlisäverollinen (24%) tunneittainen spot-hinta (snt/kWh) Nord Pool sähköpörssissä.
         Punaisilla pystyviivoilla edellisen seitsemän päivän päivätuntien (klo. 7–23) hintojen 33% ja 67% kvantiilit.</p>
-      <p class="tick first"><a id="toggle-history-button" href="#">Historia</a></p>
-      <p class="tick q33"></p>
-      <p class="tick q67"></p>
+      <div class="ticks">
+        <p class="tick"><a id="toggle-history-button" href="#">Historia</a></p>
+        <p class="tick q33"></p>
+        <p class="tick q67"></p>
+      </div>
       <div id="chart"></div>
-      <p class="tick first q33"></p>
-      <p class="tick q67"></p>
+      <div class="ticks">
+        <p class="tick q33"></p>
+        <p class="tick q67"></p>
+      </div>
     </main>
     <footer>
       <p>Lähde: <a href="https://transparency.entsoe.eu/content/static_content/Static%20content/web%20api/Guide.html">ENTSO-E API</a></p>
