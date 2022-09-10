@@ -12,6 +12,8 @@ clean:
 	rm -f lambda.zip
 	rm -f requirements-lambda.txt
 
+# https://docs.aws.amazon.com/lambda/latest/dg/python-package.html
+# https://aws.amazon.com/premiumsupport/knowledge-center/lambda-python-package-compatible/
 dist-lambda:
 	$(MAKE) check clean
 	cat requirements.txt \
@@ -31,8 +33,6 @@ dist-lambda:
 	cp download.py lambda
 	cd lambda && zip -r ../lambda.zip .
 
-# https://docs.aws.amazon.com/lambda/latest/dg/python-package.html
-# https://aws.amazon.com/premiumsupport/knowledge-center/lambda-python-package-compatible/
 deploy-lambda:
 	$(MAKE) dist-lambda
 	test -f lambda.zip
