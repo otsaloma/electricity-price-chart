@@ -13,11 +13,11 @@ ASSET_PATTERNS = {
 
 def read_asset(directory, asset):
     if asset.startswith("https://"):
-        print("GET: {}".format(asset))
+        print(f"GET: {asset}")
         response = requests.get(asset)
         response.raise_for_status()
         return response.text.strip()
-    print("READ: {}".format(asset))
+    print(f"READ: {asset}")
     path = directory / asset
     return path.read_text("utf-8").strip()
 
