@@ -58,6 +58,7 @@ function getReferenceData(data) {
 }
 
 function isPastDay(date, now) {
+    if (date > now) return false;
     if (date.getFullYear() < now.getFullYear()) return true;
     if (date.getMonth() < now.getMonth()) return true;
     if (date.getDate() < now.getDate()) return true;
@@ -74,38 +75,39 @@ function quantile(values, q) {
     const pos = (values.length - 1) * q;
     const i = Math.floor(pos);
     const diff = pos - i;
-    return values[i] * (1 - diff) + values[i+1] * diff;
+    return (1 - diff) * values[i] + diff * values[i+1];
 }
 
 function renderChart(data) {
     if (data.length === 0) return;
-    const now = new Date();
-    const ref = getReferenceData(data);
-    const refPrices = ref.map(x => x.price_with_vat);
-    const chart = document.getElementById("chart");
-    const priceMax = 1.05 * Math.max(...data.map(x => x.price_with_vat));
-    const priceQ33 = quantile(refPrices, 0.33);
-    const priceQ67 = quantile(refPrices, 0.67);
+    const now = new Date(),
+          chart = document.getElementById("chart"),
+          ref = getReferenceData(data),
+          refPrices = ref.map(x => x.price_with_vat),
+          priceMax = 1.05 * Math.max(...data.map(x => x.price_with_vat)),
+          priceQ33 = quantile(refPrices, 0.33),
+          priceQ67 = quantile(refPrices, 0.67);
+
     for (const item of data) {
-        // Append hourly bars to chart along with time and price labels.
-        const width = Math.round(item.price_with_vat / priceMax * 100);
-        const q33 = Math.round(priceQ33 / priceMax * 100);
-        const q67 = Math.round(priceQ67 / priceMax * 100);
-        const title = item.time === "00:00";
-        const time = title ? `${formatDate(item.date)}` : item.time;
-        const price = formatPrice(item.price_with_vat);
-        const datetime = new Date(item.datetime.replace(" ", "T"));
-        const pastDay = isPastDay(datetime, now);
-        const pastHour = isPastHour(datetime, now);
+        const width = Math.round(item.price_with_vat / priceMax * 100),
+              q33 = Math.round(priceQ33 / priceMax * 100),
+              q67 = Math.round(priceQ67 / priceMax * 100),
+              title = item.time === "00:00",
+              time = title ? `${formatDate(item.date)}` : item.time,
+              price = formatPrice(item.price_with_vat),
+              datetime = new Date(item.datetime.replace(" ", "T")),
+              pastDay = isPastDay(datetime, now),
+              pastHour = isPastHour(datetime, now);
+
         appendBar(chart, width, q33, q67, time, price, title, pastDay, pastHour);
     }
-    for (const span of document.getElementsByClassName("tick q33")) {
-        span.innerHTML = `${formatPrice(priceQ33)}`;
-        span.style.paddingLeft = `calc(${(priceQ33 / priceMax * 100).toFixed(1)}% - 0.5em)`;
+    for (const p of document.getElementsByClassName("tick q33")) {
+        p.innerHTML = `${formatPrice(priceQ33)}`;
+        p.style.paddingLeft = `calc(${(priceQ33 / priceMax * 100).toFixed(1)}% - 0.5em)`;
     }
-    for (const span of document.getElementsByClassName("tick q67")) {
-        span.innerHTML = `${formatPrice(priceQ67)} snt/kWh`;
-        span.style.paddingLeft = `calc(${(priceQ67 / priceMax * 100).toFixed(1)}% - 0.5em)`;
+    for (const p of document.getElementsByClassName("tick q67")) {
+        p.innerHTML = `${formatPrice(priceQ67)} snt/kWh`;
+        p.style.paddingLeft = `calc(${(priceQ67 / priceMax * 100).toFixed(1)}% - 0.5em)`;
     }
 }
 
