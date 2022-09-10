@@ -14,10 +14,8 @@ renders that data into a custom visualization.
 Create a `.env` file with the following content.
 
 ```bash
-AWS_ACCESS_KEY_ID=
-AWS_SECRET_ACCESS_KEY=
 DATAITER_USE_NUMBA=false
-ENTSOE_API_KEY=
+ENTSOE_API_KEY=...
 ```
 
 Create a virtual environment and run `./download.py local` to fetch

@@ -50,7 +50,8 @@ def download_local():
 
 def lambda_handler(event, context):
     download_bucket()
-    requests.get("https://hc-ping.com/4b1d3355-16ac-41a5-8c45-7e322462ffb3", timeout=10)
+    if url := os.getenv("SUCCESS_PING_URL"):
+        requests.get(url, timeout=10)
 
 if __name__ == "__main__" and sys.argv[1:]:
     if sys.argv[1] == "bucket":
