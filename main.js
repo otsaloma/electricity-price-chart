@@ -89,7 +89,7 @@ function renderChart(data) {
           priceQ67 = quantile(refPrices, 0.67);
 
     for (const item of data) {
-        const width = Math.round(item.price_with_vat / priceMax * 100),
+        const width = Math.round(Math.max(0, item.price_with_vat) / priceMax * 100),
               q33 = Math.round(priceQ33 / priceMax * 100),
               q67 = Math.round(priceQ67 / priceMax * 100),
               title = item.time === "00:00",
