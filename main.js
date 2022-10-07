@@ -102,12 +102,18 @@ function renderChart(data) {
         appendBar(chart, width, q33, q67, time, price, title, pastDay, pastHour);
     }
     for (const p of document.getElementsByClassName("tick q33")) {
-        p.innerHTML = `${formatPrice(priceQ33)}`;
-        p.style.paddingLeft = `calc(${(priceQ33 / priceMax * 100).toFixed(1)}% - 0.5em)`;
+        const label = formatPrice(priceQ33);
+        const width = Math.round(priceQ33 / priceMax * 100);
+        const shift = (0.25 * label.length).toFixed(2);
+        p.innerHTML = `${label}`;
+        p.style.paddingLeft = `calc(${width}% - ${shift}em)`;
     }
     for (const p of document.getElementsByClassName("tick q67")) {
-        p.innerHTML = `${formatPrice(priceQ67)} snt/kWh`;
-        p.style.paddingLeft = `calc(${(priceQ67 / priceMax * 100).toFixed(1)}% - 0.5em)`;
+        const label = formatPrice(priceQ67);
+        const width = Math.round(priceQ67 / priceMax * 100);
+        const shift = (0.25 * label.length).toFixed(2);
+        p.innerHTML = `${label} snt/kWh`;
+        p.style.paddingLeft = `calc(${width}% - ${shift}em)`;
     }
 }
 
