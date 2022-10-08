@@ -70,6 +70,12 @@ function isPastHour(date, now) {
     return (date.getTime() + 3600*1000) < now.getTime();
 }
 
+function nround(x, n) {
+    n = n || 0;
+    const factor = Math.pow(10, n);
+    return Math.round(factor * x) / factor;
+}
+
 function quantile(values, q) {
     values.sort((a, b) => a - b);
     const pos = (values.length - 1) * q;
@@ -89,9 +95,9 @@ function renderChart(data) {
           priceQ67 = quantile(refPrices, 0.67);
 
     for (const item of data) {
-        const width = Math.round(Math.max(0, item.price_with_vat) / priceMax * 100),
-              q33 = Math.round(priceQ33 / priceMax * 100),
-              q67 = Math.round(priceQ67 / priceMax * 100),
+        const width = nround(Math.max(0, item.price_with_vat) / priceMax * 100, 1),
+              q33 = nround(priceQ33 / priceMax * 100, 1),
+              q67 = nround(priceQ67 / priceMax * 100, 1),
               title = item.time === "00:00",
               time = title ? `${formatDate(item.date)}` : item.time,
               price = formatPrice(item.price_with_vat),
@@ -103,14 +109,14 @@ function renderChart(data) {
     }
     for (const p of document.getElementsByClassName("tick q33")) {
         const label = formatPrice(priceQ33);
-        const width = Math.round(priceQ33 / priceMax * 100);
+        const width = nround(priceQ33 / priceMax * 100, 1);
         const shift = (0.25 * label.length).toFixed(2);
         p.innerHTML = `${label}`;
         p.style.paddingLeft = `calc(${width}% - ${shift}em)`;
     }
     for (const p of document.getElementsByClassName("tick q67")) {
         const label = formatPrice(priceQ67);
-        const width = Math.round(priceQ67 / priceMax * 100);
+        const width = nround(priceQ67 / priceMax * 100, 1);
         const shift = (0.25 * label.length).toFixed(2);
         p.innerHTML = `${label} snt/kWh`;
         p.style.paddingLeft = `calc(${width}% - ${shift}em)`;
