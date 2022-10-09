@@ -45,10 +45,6 @@ function formatDate(string) {
     return `${weekday} ${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()}`;
 }
 
-function formatPrice(number) {
-    return number.toFixed(0);
-}
-
 function getReferenceData(data) {
     // Daytime hours of the first seven days of data.
     return data.slice(0, 7 * 24).filter(x => {
@@ -100,7 +96,7 @@ function renderChart(data) {
               q67 = nround(priceQ67 / priceMax * 100, 1),
               title = item.time === "00:00",
               time = title ? `${formatDate(item.date)}` : item.time,
-              price = formatPrice(item.price_with_vat),
+              price = item.price_with_vat.toFixed(0);
               datetime = new Date(item.datetime.replace(" ", "T")),
               pastDay = isPastDay(datetime, now),
               pastHour = isPastHour(datetime, now);
@@ -108,14 +104,14 @@ function renderChart(data) {
         appendBar(chart, width, q33, q67, time, price, title, pastDay, pastHour);
     }
     for (const p of document.getElementsByClassName("tick q33")) {
-        const label = formatPrice(priceQ33);
+        const label = priceQ33.toPrecision(2).replace(".", ",");
         const width = nround(priceQ33 / priceMax * 100, 1);
         const shift = (0.25 * label.length).toFixed(2);
         p.innerHTML = `${label}`;
         p.style.paddingLeft = `calc(${width}% - ${shift}em)`;
     }
     for (const p of document.getElementsByClassName("tick q67")) {
-        const label = formatPrice(priceQ67);
+        const label = priceQ67.toPrecision(2).replace(".", ",");
         const width = nround(priceQ67 / priceMax * 100, 1);
         const shift = (0.25 * label.length).toFixed(2);
         p.innerHTML = `${label} snt/kWh`;
