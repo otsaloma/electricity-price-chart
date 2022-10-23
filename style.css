@@ -70,7 +70,7 @@ a[role="button"] {
   border: none;
   border-radius: 9px;
   color: var(--color-text);
-  padding: 3px 9px;
+  padding: 3px 8px;
 }
 
 a[role="button"]:hover {
