@@ -65,6 +65,18 @@ a {
   text-decoration: none;
 }
 
+a[role="button"] {
+  background-color: #e5e7eb;
+  border: none;
+  border-radius: 9px;
+  color: var(--color-text);
+  padding: 3px 9px;
+}
+
+a[role="button"]:hover {
+  background-color: #fde68a;
+}
+
 p {
   margin: var(--padding-1) 0;
   text-align: left;
