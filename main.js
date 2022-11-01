@@ -121,6 +121,14 @@ function renderChart(data) {
 
 (function() {
 
+    const today = (new Date()).toISOString().substring(0, 10);
+    if (today >= "2022-12-01" && today <= "2023-04-30") {
+        // Use reduced VAT December–April.
+        // https://vm.fi/hanke?tunnus=VM112:00/2022
+        // https://www.hs.fi/politiikka/art-2000009040795.html
+        document.querySelector("#vat").innerHTML = "10%";
+    }
+
     fetch("prices.json")
         .then(response => response.json())
         .then(data => renderChart(data));

@@ -21,7 +21,11 @@ def download():
     data.date = data.datetime.map(lambda x: x.date().isoformat())
     data.time = data.datetime.map(lambda x: x.time().isoformat("minutes"))
     data.price = ts.to_numpy() / 10 # EUR/MWh to snt/kWh
-    vat = 0.24 * data.price
+    # Use reduced VAT December–April.
+    # https://vm.fi/hanke?tunnus=VM112:00/2022
+    # https://www.hs.fi/politiikka/art-2000009040795.html
+    data.vat = np.where((data.date >= "2022-12-01") & (data.date <= "2023-04-30"), 0.1, 0.24)
+    vat = data.vat * data.price
     vat[data.price < 0] = 0
     data.price_with_vat = data.price + vat
     # Remove excess hour at the end of data.
