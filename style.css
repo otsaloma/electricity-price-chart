@@ -115,6 +115,11 @@ p {
   opacity: 0.5;
 }
 
+/* Current hour */
+#chart .past-hour + .bar:not(.past-hour) {
+  background-color: #fef3c7;
+}
+
 #chart .label {
   height: 0;
   line-height: var(--height-bar);
