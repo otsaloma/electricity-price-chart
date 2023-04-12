@@ -96,7 +96,7 @@ function renderChart(data) {
               q67 = nround(priceQ67 / priceMax * 100, 1),
               title = item.time === "00:00",
               time = title ? `${formatDate(item.date)}` : item.time,
-              price = item.price_with_vat.toFixed(0);
+              price = item.price_with_vat.toFixed(1).replace(".", ",");
               datetime = new Date(item.datetime.replace(" ", "T")),
               pastDay = isPastDay(datetime, now),
               pastHour = isPastHour(datetime, now);
