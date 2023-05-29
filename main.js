@@ -90,11 +90,12 @@ function renderChart(data) {
           priceQ33 = quantile(refPrices, 0.33),
           priceQ67 = quantile(refPrices, 0.67);
 
+    var prevDate = null;
     for (const item of data) {
         const width = nround(Math.max(0, item.price_with_vat) / priceMax * 100, 1),
               q33 = nround(priceQ33 / priceMax * 100, 1),
               q67 = nround(priceQ67 / priceMax * 100, 1),
-              title = item.time === "00:00",
+              title = item.date !== prevDate,
               time = title ? `${formatDate(item.date)}` : item.time,
               price = item.price_with_vat.toFixed(1).replace(".", ",");
               datetime = new Date(item.datetime.replace(" ", "T")),
@@ -102,6 +103,7 @@ function renderChart(data) {
               pastHour = isPastHour(datetime, now);
 
         appendBar(chart, width, q33, q67, time, price, title, pastDay, pastHour);
+        prevDate = item.date;
     }
     for (const p of document.getElementsByClassName("tick q33")) {
         const label = priceQ33.toPrecision(2).replace(".", ",");
