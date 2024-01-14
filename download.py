@@ -30,7 +30,7 @@ def download():
     data.price_with_vat = data.price + vat
     # Remove excess hour at the end of data.
     if data.time[-1] == "00:00":
-        data = data.slice(np.arange(data.nrow - 1))
+        data = data.slice_off([data.nrow - 1])
     return data
 
 def download_bucket():
