@@ -1,6 +1,6 @@
 boto3==1.24.66
 dataiter==0.49
-entsoe-py==0.6.11
+entsoe-py==0.6.13
 flake8==7.0.0
 numpy==1.26.3
 pandas==2.2.0
