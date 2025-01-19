@@ -30,6 +30,7 @@ dist-lambda:
 	--only-binary=:all: \
 	-r requirements-lambda.txt
 	rm -rf lambda/bin
+	rm -rf lambda/pyarrow
 	find lambda -name "__pycache__" -prune -exec rm -rf {} \;
 	find lambda -name "*.dist-info" -prune -exec rm -rf {} \;
 	cp download.py lambda
