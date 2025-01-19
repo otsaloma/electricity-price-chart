@@ -1,5 +1,6 @@
 # -*- coding: utf-8-unix -*-
 
+PYTHON = python3.12
 VERSION = `date +%s`
 
 check:
@@ -13,6 +14,7 @@ clean:
 	rm -f requirements-lambda.txt
 
 # https://docs.aws.amazon.com/lambda/latest/dg/python-package.html
+# https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html#runtimes-supported
 # https://aws.amazon.com/premiumsupport/knowledge-center/lambda-python-package-compatible/
 dist-lambda:
 	$(MAKE) check clean
@@ -24,7 +26,7 @@ dist-lambda:
 	--platform manylinux2014_x86_64 \
 	--target lambda \
 	--implementation cp \
-	--python-version 3.9 \
+	--python-version 3.12 \
 	--only-binary=:all: \
 	-r requirements-lambda.txt
 	rm -rf lambda/bin
@@ -67,4 +69,11 @@ deploy-html:
 run:
 	python3 -m http.server
 
-.PHONY: check clean dist-lambda deploy-lambda dist-html deploy-html run
+venv:
+	rm -rf venv
+	$(PYTHON) -m venv venv
+	. venv/bin/activate && \
+	  pip install -U pip setuptools wheel && \
+	  pip install -r requirements.txt
+
+.PHONY: check clean dist-lambda deploy-lambda dist-html deploy-html run venv

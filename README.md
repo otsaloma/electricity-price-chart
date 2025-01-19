@@ -14,7 +14,6 @@ renders that data into a custom visualization.
 Create a `.env` file with the following content.
 
 ```bash
-DATAITER_USE_NUMBA=false
 ENTSOE_API_KEY=...
 ```
 
