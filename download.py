@@ -29,6 +29,9 @@ def download():
     # Remove excess hour at the end of data.
     if data.time[-1] == "00:00":
         data = data.slice_off([data.nrow - 1])
+    data.price = data.price.round(3)
+    data.price_with_vat = data.price_with_vat.round(3)
+    data.vat = data.vat.round(3)
     return data
 
 def download_bucket():
