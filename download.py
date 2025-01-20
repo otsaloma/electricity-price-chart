@@ -52,6 +52,8 @@ def download_local():
     data = download()
     data.write_npz("prices.npz")
     data.write_json("prices.json")
+    print(f"From: {data.date.min()}")
+    print(f"  To: {data.date.max()}")
     print(f"Wrote {data.nrow} prices to prices.npz.")
     print(f"Wrote {data.nrow} prices to prices.json.")
 

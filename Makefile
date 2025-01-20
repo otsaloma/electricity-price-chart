@@ -70,6 +70,13 @@ deploy-html:
 run:
 	python3 -m http.server
 
+run-lambda:
+	aws lambda invoke \
+	--region eu-north-1 \
+	--function-name entsoe-download \
+	response.json
+	cat response.json
+
 venv:
 	rm -rf venv
 	$(PYTHON) -m venv venv
@@ -77,4 +84,4 @@ venv:
 	  pip install -U pip setuptools wheel && \
 	  pip install -r requirements.txt
 
-.PHONY: check clean dist-lambda deploy-lambda dist-html deploy-html run venv
+.PHONY: check clean dist-lambda deploy-lambda dist-html deploy-html run run-lambda venv

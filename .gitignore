@@ -7,4 +7,5 @@ lambda.zip
 prices.json
 prices.npz
 requirements-lambda.txt
+response.json
 venv
