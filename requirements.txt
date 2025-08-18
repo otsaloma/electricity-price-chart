@@ -1,7 +1,7 @@
-boto3==1.36.2
-dataiter==0.9999
-entsoe-py==0.6.18
-flake8==7.1.1
-numpy==2.2.2
-pandas==2.2.3
-requests==2.32.3
+boto3==1.40.12
+dataiter==1.1
+entsoe-py==0.7.3
+flake8==7.3.0
+numpy==2.3.2
+pandas==2.3.1
+requests==2.32.5
