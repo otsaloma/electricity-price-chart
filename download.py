@@ -18,18 +18,32 @@ def download():
     end = (now + pd.Timedelta(2, "d")).floor("d")
     ts = client.query_day_ahead_prices("FI", start=start, end=end)
     data = di.DataFrame(datetime=ts.index.to_pydatetime())
-    data.date = data.datetime.map(lambda x: x.date().isoformat())
-    data.time = data.datetime.map(lambda x: x.time().isoformat("minutes"))
+    data.datetime = data.datetime.map(lambda x: x.replace(tzinfo=None))
+    data.datetime = data.datetime.as_datetime()
+    data.date = data.datetime.dt.to_string("%Y-%m-%d")
+    data.time = data.datetime.dt.to_string("%H:%M")
+    data.hour = data.datetime.dt.hour()
     data.price = ts.to_numpy() / 10 # EUR/MWh to snt/kWh
+    data = data.group_by(
+        "date",
+        "hour",
+    ).aggregate(
+        datetime=di.first("datetime"),
+        time=di.first("time"),
+        price=di.mean("price"),
+        price_min=di.min("price"),
+        price_max=di.max("price"),
+    )
     # VAT 24% -> 25.5% starting September 2024.
     data.vat = np.where(data.date >= "2024-09-01", 0.255, 0.24)
-    vat = data.vat * data.price
-    vat[data.price < 0] = 0
+    vat = np.where(data.price > 0, data.vat * data.price, 0)
     data.price_with_vat = data.price + vat
     # Remove excess hour at the end of data.
     if data.time[-1] == "00:00":
         data = data.slice_off([data.nrow - 1])
     data.price = data.price.round(3)
+    data.price_min = data.price_min.round(3)
+    data.price_max = data.price_max.round(3)
     data.price_with_vat = data.price_with_vat.round(3)
     data.vat = data.vat.round(3)
     return data
