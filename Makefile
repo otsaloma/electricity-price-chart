@@ -1,6 +1,6 @@
 # -*- coding: utf-8-unix -*-
 
-PYTHON = python3.12
+PYTHON = python3.14
 VERSION = `date +%s`
 
 check:
@@ -26,7 +26,7 @@ dist-lambda:
 	--platform manylinux2014_x86_64 \
 	--target lambda \
 	--implementation cp \
-	--python-version 3.12 \
+	--python-version 3.14 \
 	--only-binary=:all: \
 	-r requirements-lambda.txt
 	rm -rf lambda/bin

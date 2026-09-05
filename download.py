@@ -14,8 +14,8 @@ from entsoe import EntsoePandasClient
 def download():
     client = EntsoePandasClient(api_key=os.environ["ENTSOE_API_KEY"])
     now = pd.Timestamp.now("Europe/Helsinki")
-    start = (now - pd.Timedelta(7, "d")).floor("d")
-    end = (now + pd.Timedelta(2, "d")).floor("d")
+    start = (now - pd.Timedelta(7, "D")).floor("D")
+    end = (now + pd.Timedelta(2, "D")).floor("D")
     ts = client.query_day_ahead_prices("FI", start=start, end=end)
     data = di.DataFrame(datetime=ts.index.to_pydatetime())
     data.datetime = data.datetime.map(lambda x: x.replace(tzinfo=None))
