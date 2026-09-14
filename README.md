@@ -1,5 +1,4 @@
-Finnish Electricity Price Chart
-===============================
+# Finnish Electricity Price Chart
 
 A visualization of Finnish electricity spot prices in two parts: (1) A
 lambda function that downloads data from the [ENTSO-E API][] using

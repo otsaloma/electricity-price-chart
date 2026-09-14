@@ -34,10 +34,8 @@ def download():
         price_min=di.min("price"),
         price_max=di.max("price"),
     )
-    # VAT 24% -> 25.5% starting September 2024.
-    data.vat = np.where(data.date >= "2024-09-01", 0.255, 0.24)
-    vat = np.where(data.price > 0, data.vat * data.price, 0)
-    data.price_with_vat = data.price + vat
+    data.vat = 0.255
+    data.price_with_vat = np.where(data.price > 0, data.price + data.vat * data.price, data.price)
     # Remove excess hour at the end of data.
     if data.time[-1] == "00:00":
         data = data.slice_off([data.nrow - 1])
