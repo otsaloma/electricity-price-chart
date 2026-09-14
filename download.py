@@ -2,7 +2,6 @@
 
 import boto3
 import dataiter as di
-import io
 import numpy as np
 import os
 import pandas as pd
@@ -17,8 +16,7 @@ def download():
     start = (now - pd.Timedelta(7, "D")).floor("D")
     end = (now + pd.Timedelta(2, "D")).floor("D")
     ts = client.query_day_ahead_prices("FI", start=start, end=end)
-    data = di.DataFrame(datetime=ts.index.to_pydatetime())
-    data.datetime = data.datetime.map(lambda x: x.replace(tzinfo=None))
+    data = di.DataFrame(datetime=ts.index.tz_localize(None).to_pydatetime())
     data.datetime = data.datetime.as_datetime()
     data.date = data.datetime.dt.to_string("%Y-%m-%d")
     data.time = data.datetime.dt.to_string("%H:%M")
@@ -43,21 +41,17 @@ def download():
     data.price_min = data.price_min.round(3)
     data.price_max = data.price_max.round(3)
     data.price_with_vat = data.price_with_vat.round(3)
-    data.vat = data.vat.round(3)
     return data
 
 def download_bucket():
     data = download()
-    text = data.to_json()
-    blob = text.encode("utf-8")
     s3 = boto3.client("s3")
-    s3.upload_fileobj(
-        io.BytesIO(blob),
-        "otsaloma.io",
-        "sahko/prices.json",
-        ExtraArgs={
-            "ACL": "public-read",
-            "CacheControl": "public, max-age=300"})
+    s3.put_object(
+        Bucket="otsaloma.io",
+        Key="sahko/prices.json",
+        Body=data.to_json().encode("utf-8"),
+        ACL="public-read",
+        CacheControl="public, max-age=300")
     print(f"Wrote {data.nrow} prices to s3://otsaloma.io/sahko/prices.json.")
 
 def download_local():
