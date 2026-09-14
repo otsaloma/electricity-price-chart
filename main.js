@@ -52,19 +52,6 @@ function getReferenceData(data) {
     });
 }
 
-function isPastDay(date, now) {
-    if (date > now) return false;
-    if (date.getFullYear() < now.getFullYear()) return true;
-    if (date.getMonth() < now.getMonth()) return true;
-    if (date.getDate() < now.getDate()) return true;
-    return false;
-}
-
-function isPastHour(date, now) {
-    // Add one hour to get the endpoint of the range.
-    return (date.getTime() + 3600*1000) < now.getTime();
-}
-
 function quantile(values, q) {
     values.sort((a, b) => a - b);
     const pos = (values.length - 1) * q;
@@ -78,6 +65,7 @@ function renderChart(data) {
     for (const item of data)
         item.datetime = new Date(item.datetime.replace(" ", "T"));
     const now = new Date(),
+          today = new Date(now).setHours(0, 0, 0, 0),
           chart = document.getElementById("chart"),
           ref = getReferenceData(data),
           refPrices = ref.map(x => x.price_with_vat),
@@ -93,8 +81,9 @@ function renderChart(data) {
               title = item.date !== prevDate,
               time = title ? formatDate(item.datetime) : item.time,
               price = item.price_with_vat.toFixed(1).replace(".", ","),
-              pastDay = isPastDay(item.datetime, now),
-              pastHour = isPastHour(item.datetime, now);
+              pastDay = item.datetime < today,
+              // Add one hour to get the endpoint of the range.
+              pastHour = item.datetime.getTime() + 3600 * 1000 < now;
 
         appendBar(chart, width, q33, q67, time, price, title, pastDay, pastHour);
         prevDate = item.date;
