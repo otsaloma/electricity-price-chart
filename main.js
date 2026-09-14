@@ -88,16 +88,16 @@ function renderChart(data) {
           refPrices = ref.map(x => x.price_with_vat),
           priceMax = 1.05 * Math.max(...data.map(x => x.price_with_vat)),
           priceQ33 = quantile(refPrices, 0.33),
-          priceQ67 = quantile(refPrices, 0.67);
+          priceQ67 = quantile(refPrices, 0.67),
+          q33 = nround(priceQ33 / priceMax * 100, 1),
+          q67 = nround(priceQ67 / priceMax * 100, 1);
 
-    var prevDate = null;
+    let prevDate = null;
     for (const item of data) {
         const width = nround(Math.max(0, item.price_with_vat) / priceMax * 100, 1),
-              q33 = nround(priceQ33 / priceMax * 100, 1),
-              q67 = nround(priceQ67 / priceMax * 100, 1),
               title = item.date !== prevDate,
-              time = title ? `${formatDate(item.date)}` : item.time,
-              price = item.price_with_vat.toFixed(1).replace(".", ",");
+              time = title ? formatDate(item.date) : item.time,
+              price = item.price_with_vat.toFixed(1).replace(".", ","),
               datetime = new Date(item.datetime.replace(" ", "T")),
               pastDay = isPastDay(datetime, now),
               pastHour = isPastHour(datetime, now);
@@ -107,17 +107,15 @@ function renderChart(data) {
     }
     for (const p of document.getElementsByClassName("tick q33")) {
         const label = priceQ33.toPrecision(2).replace(".", ",");
-        const width = nround(priceQ33 / priceMax * 100, 1);
         const shift = (0.25 * label.length).toFixed(2);
-        p.innerHTML = `${label}`;
-        p.style.paddingLeft = `calc(${width}% - ${shift}em)`;
+        p.innerHTML = label;
+        p.style.paddingLeft = `calc(${q33}% - ${shift}em)`;
     }
     for (const p of document.getElementsByClassName("tick q67")) {
         const label = priceQ67.toPrecision(2).replace(".", ",");
-        const width = nround(priceQ67 / priceMax * 100, 1);
         const shift = (0.25 * label.length).toFixed(2);
         p.innerHTML = `${label} snt/kWh`;
-        p.style.paddingLeft = `calc(${width}% - ${shift}em)`;
+        p.style.paddingLeft = `calc(${q67}% - ${shift}em)`;
     }
 }
 
@@ -128,7 +126,7 @@ function renderChart(data) {
         .then(data => renderChart(data));
 
     document.querySelector("#toggle-history-button")
-        .addEventListener("click", event =>
+        .addEventListener("click", () =>
             document.querySelectorAll(".past-day")
                 .forEach(x => x.classList.toggle("hidden")));
 
