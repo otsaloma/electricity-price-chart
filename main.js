@@ -66,12 +66,6 @@ function isPastHour(date, now) {
     return (date.getTime() + 3600*1000) < now.getTime();
 }
 
-function nround(x, n) {
-    n = n || 0;
-    const factor = Math.pow(10, n);
-    return Math.round(factor * x) / factor;
-}
-
 function quantile(values, q) {
     values.sort((a, b) => a - b);
     const pos = (values.length - 1) * q;
@@ -89,12 +83,12 @@ function renderChart(data) {
           priceMax = 1.05 * Math.max(...data.map(x => x.price_with_vat)),
           priceQ33 = quantile(refPrices, 0.33),
           priceQ67 = quantile(refPrices, 0.67),
-          q33 = nround(priceQ33 / priceMax * 100, 1),
-          q67 = nround(priceQ67 / priceMax * 100, 1);
+          q33 = (priceQ33 / priceMax * 100).toFixed(1),
+          q67 = (priceQ67 / priceMax * 100).toFixed(1);
 
     let prevDate = null;
     for (const item of data) {
-        const width = nround(Math.max(0, item.price_with_vat) / priceMax * 100, 1),
+        const width = (Math.max(0, item.price_with_vat) / priceMax * 100).toFixed(1),
               title = item.date !== prevDate,
               time = title ? formatDate(item.date) : item.time,
               price = item.price_with_vat.toFixed(1).replace(".", ","),
