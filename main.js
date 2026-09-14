@@ -39,8 +39,7 @@ function appendBar(chart, width, q33, q67, time, price, title, pastDay, pastHour
     chart.appendChild(div);
 }
 
-function formatDate(string) {
-    const date = new Date(string);
+function formatDate(date) {
     const weekday = ["su", "ma", "ti", "ke", "to", "pe", "la"][date.getDay()];
     return `${weekday} ${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()}`;
 }
@@ -48,7 +47,7 @@ function formatDate(string) {
 function getReferenceData(data) {
     // Daytime hours of the first seven days of data.
     return data.slice(0, 7 * 24).filter(x => {
-        const hour = new Date(x.datetime.replace(" ", "T")).getHours();
+        const hour = x.datetime.getHours();
         return hour >= 7 && hour < 23;
     });
 }
@@ -76,6 +75,8 @@ function quantile(values, q) {
 
 function renderChart(data) {
     if (data.length === 0) return;
+    for (const item of data)
+        item.datetime = new Date(item.datetime.replace(" ", "T"));
     const now = new Date(),
           chart = document.getElementById("chart"),
           ref = getReferenceData(data),
@@ -90,11 +91,10 @@ function renderChart(data) {
     for (const item of data) {
         const width = (Math.max(0, item.price_with_vat) / priceMax * 100).toFixed(1),
               title = item.date !== prevDate,
-              time = title ? formatDate(item.date) : item.time,
+              time = title ? formatDate(item.datetime) : item.time,
               price = item.price_with_vat.toFixed(1).replace(".", ","),
-              datetime = new Date(item.datetime.replace(" ", "T")),
-              pastDay = isPastDay(datetime, now),
-              pastHour = isPastHour(datetime, now);
+              pastDay = isPastDay(item.datetime, now),
+              pastHour = isPastHour(item.datetime, now);
 
         appendBar(chart, width, q33, q67, time, price, title, pastDay, pastHour);
         prevDate = item.date;
