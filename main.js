@@ -88,17 +88,14 @@ function renderChart(data) {
         appendBar(chart, width, q33, q67, time, price, title, pastDay, pastHour);
         prevDate = item.date;
     }
-    for (const p of document.getElementsByClassName("tick q33")) {
-        const label = priceQ33.toPrecision(2).replace(".", ",");
+    for (const [name, price, position, unit] of [["q33", priceQ33, q33, ""],
+                                                 ["q67", priceQ67, q67, " snt/kWh"]]) {
+        const label = price.toPrecision(2).replace(".", ",");
         const shift = (0.25 * label.length).toFixed(2);
-        p.innerHTML = label;
-        p.style.paddingLeft = `calc(${q33}% - ${shift}em)`;
-    }
-    for (const p of document.getElementsByClassName("tick q67")) {
-        const label = priceQ67.toPrecision(2).replace(".", ",");
-        const shift = (0.25 * label.length).toFixed(2);
-        p.innerHTML = `${label} snt/kWh`;
-        p.style.paddingLeft = `calc(${q67}% - ${shift}em)`;
+        for (const p of document.getElementsByClassName(`tick ${name}`)) {
+            p.innerHTML = label + unit;
+            p.style.paddingLeft = `calc(${position}% - ${shift}em)`;
+        }
     }
 }
 
