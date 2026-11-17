@@ -22,7 +22,7 @@ dist-lambda:
 	| grep -v boto3 \
 	| grep -v flake8 \
 	> requirements-lambda.txt
-	pip3 install \
+	pip install \
 	--platform manylinux2014_x86_64 \
 	--target lambda \
 	--implementation cp \
@@ -68,7 +68,7 @@ deploy-html:
 	--cache-control "public, max-age=86400"
 
 run:
-	python3 -m http.server
+	python -m http.server
 
 run-lambda:
 	aws lambda invoke \
