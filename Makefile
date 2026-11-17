@@ -23,7 +23,7 @@ dist-lambda:
 	| grep -v flake8 \
 	> requirements-lambda.txt
 	pip install \
-	--platform manylinux2014_x86_64 \
+	--platform manylinux_2_28_x86_64 \
 	--target lambda \
 	--implementation cp \
 	--python-version 3.13 \
