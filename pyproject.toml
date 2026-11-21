@@ -1,0 +1,22 @@
+[project]
+name = "electricity-price-chart"
+version = "0.0.0"
+requires-python = ">=3.13"
+dependencies = [
+    # Since 2.0, Dataiter hard-requires PyArrow,
+    # which pushes the Lambda size over 50 MB.
+    "dataiter==1.4",
+    "entsoe-py==1.0.0",
+    "numpy==2.5.5",
+    "pandas==3.1.1",
+    # Lambda runtime botocore requirement
+    "python-dateutil<3",
+    "requests==2.34.2",
+]
+
+[dependency-groups]
+dev = [
+    # Provided by the Lambda runtime
+    "boto3==1.44.4",
+    "flake8==7.5.0",
+]
