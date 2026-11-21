@@ -5,7 +5,7 @@ VERSION = `date +%s`
 
 check:
 	flake8 *.py
-	jshint *.js
+	oxlint --deny-warnings *.js
 
 clean:
 	rm -rf html
