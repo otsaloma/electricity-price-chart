@@ -9,6 +9,7 @@ from pathlib import Path
 ASSET_PATTERNS = {
     '<link rel="stylesheet" href="(.*?)">': '<style>{}</style>',
     '<script src="(.*?)"></script>': '<script>{}</script>',
+    '<script type="module" src="(.*?)"></script>': '<script type="module">{}</script>',
 }
 
 def read_asset(directory, asset):
