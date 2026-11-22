@@ -230,17 +230,17 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "dataiter", specifier = "==1.4" },
-    { name = "entsoe-py", specifier = "==1.0.0" },
-    { name = "numpy", specifier = "==2.5.5" },
-    { name = "pandas", specifier = "==3.1.1" },
+    { name = "entsoe-py", specifier = ">=1.0.0" },
+    { name = "numpy", specifier = ">=2.5.5" },
+    { name = "pandas", specifier = ">=3.1.1" },
     { name = "python-dateutil", specifier = "<3" },
-    { name = "requests", specifier = "==2.34.2" },
+    { name = "requests", specifier = ">=2.34.2" },
 ]
 
 [package.metadata.requires-dev]
 dev = [
     { name = "boto3", specifier = "==1.44.4" },
-    { name = "flake8", specifier = "==7.5.0" },
+    { name = "flake8", specifier = ">=7.5.0" },
 ]
 
 [[package]]
